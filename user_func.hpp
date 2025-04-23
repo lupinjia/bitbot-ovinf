@@ -1,0 +1,215 @@
+#ifndef USER_FUNC_HPP
+#define USER_FUNC_HPP
+
+#include <float.h>
+#include <math.h>
+
+#include <chrono>
+#include <cmath>
+#include <cmath>  // std::abs
+#include <ctime>
+#include <iostream>  // std::cout
+#include <memory>
+
+#include "controller/init_pos.hpp"
+#include "controller/policy_controller.hpp"
+#include "controller/zero_pos.hpp"
+#include "robot/hhfc_mj/hhfc_mj_common.h"
+#include "robot/hhfc_mj/robot_hhfc_mj.hpp"
+
+enum Events {
+  InitPose = 1001,
+  PolicyRun,
+
+  VeloxIncrease = 2001,
+  VeloxDecrease = 2002,
+  VeloyIncrease = 2003,
+  VeloyDecrease = 2004,
+
+  SetVelX = 2014,
+  SetVelY = 2015,
+  SetVelW = 2016,
+};
+
+enum class States : bitbot::StateId {
+  Waiting = 1001,
+
+  InitPose,
+  PolicyRun,
+};
+
+class MakeBitbotEverywhere {
+ public:
+  MakeBitbotEverywhere(std::string const &kernel_config,
+                       std::string const &controller_config)
+      : kernel_(kernel_config) {
+    logger_ = bitbot::Logger().ConsoleLogger();
+    YAML::Node config =
+        YAML::LoadFile("/home/dknt/Project/bitbot-ovinf/config/robot.yaml");
+
+    // robot
+    robot_ = std::make_shared<ovinf::RobotHhfcMj>(config["RobotConfig"]);
+    // robot_->PrintInfo();
+
+    // init controller
+    init_pos_controller_ = std::make_shared<ovinf::InitPosController>(
+        robot_, config["RobotConfig"]["init_pos"]);
+
+    // zero controller
+    zero_pos_controller_ = std::make_shared<ovinf::ZeroPosController>(
+        robot_, config["RobotConfig"]["zero_pos"]);
+
+    // Policy net
+    humanoid_controller_ = std::make_shared<ovinf::PolicyController>(
+        robot_, config["RobotConfig"]["policy_humanoid"]);
+
+    command_.setZero();
+  }
+
+  void WillMake() {
+    // Config
+    kernel_.RegisterConfigFunc([this](const KernelBus &bus, UserData &) {
+      robot_->GetDevice(bus);
+      humanoid_controller_->WarmUp();
+    });
+
+    // Event
+    kernel_.RegisterEvent(
+        "init_pose", static_cast<bitbot::EventId>(Events::InitPose),
+        [this](bitbot::EventValue, UserData &) {
+          init_pos_controller_->Init();
+          return static_cast<bitbot::StateId>(States::InitPose);
+        });
+
+    kernel_.RegisterEvent(
+        "policy_run", static_cast<bitbot::EventId>(Events::PolicyRun),
+        [this](bitbot::EventValue, UserData &) {
+          humanoid_controller_->Init();
+          return static_cast<bitbot::StateId>(States::PolicyRun);
+        });
+
+    kernel_.RegisterEvent(
+        "velo_x_increase", static_cast<bitbot::EventId>(Events::VeloxIncrease),
+        [this](bitbot::EventValue key_state, UserData &) {
+          if (key_state ==
+              static_cast<bitbot::EventValue>(bitbot::KeyboardEvent::Up)) {
+            command_[0] += 0.05;
+            std::cout << "current velocity: x=" << command_[0]
+                      << " y=" << command_[2] << std::endl;
+          }
+          return std::nullopt;
+        });
+
+    kernel_.RegisterEvent(
+        "velo_x_decrease", static_cast<bitbot::EventId>(Events::VeloxDecrease),
+        [this](bitbot::EventValue key_state, UserData &) {
+          if (key_state ==
+              static_cast<bitbot::EventValue>(bitbot::KeyboardEvent::Up)) {
+            command_[0] -= 0.05;
+            std::cout << "current velocity: x=" << command_[0]
+                      << " y=" << command_[2] << std::endl;
+          }
+          return std::nullopt;
+        });
+
+    kernel_.RegisterEvent(
+        "velo_y_increase", static_cast<bitbot::EventId>(Events::VeloyIncrease),
+        [this](bitbot::EventValue key_state, UserData &) {
+          if (key_state ==
+              static_cast<bitbot::EventValue>(bitbot::KeyboardEvent::Up)) {
+            command_[1] += 0.05;
+            std::cout << "current velocity: x=" << command_[0]
+                      << " y=" << command_[2] << std::endl;
+          }
+          return std::nullopt;
+        });
+
+    kernel_.RegisterEvent(
+        "velo_y_decrease", static_cast<bitbot::EventId>(Events::VeloyDecrease),
+        [this](bitbot::EventValue key_state, UserData &) {
+          if (key_state ==
+              static_cast<bitbot::EventValue>(bitbot::KeyboardEvent::Up)) {
+            command_[1] -= 0.05;
+            std::cout << "current velocity: x=" << command_[0]
+                      << " y=" << command_[2] << std::endl;
+          }
+          return std::nullopt;
+        });
+
+    kernel_.RegisterEvent(
+        "set_vel_x", static_cast<bitbot::EventId>(Events::SetVelX),
+        [this](bitbot::EventValue key_state, UserData &) {
+          double value = *reinterpret_cast<double *>(&key_state);
+          command_[0] = value;
+          return std::nullopt;
+        });
+
+    kernel_.RegisterEvent(
+        "set_vel_y", static_cast<bitbot::EventId>(Events::SetVelY),
+        [this](bitbot::EventValue key_state, UserData &) {
+          double value = *reinterpret_cast<double *>(&key_state);
+          command_[1] = value;
+          return std::nullopt;
+        });
+
+    kernel_.RegisterEvent(
+        "set_vel_w", static_cast<bitbot::EventId>(Events::SetVelW),
+        [this](bitbot::EventValue key_state, UserData &) {
+          double value = *reinterpret_cast<double *>(&key_state);
+          command_[2] = value;
+          return std::nullopt;
+        });
+
+    // State
+    kernel_.RegisterState(
+        "waiting", static_cast<bitbot::StateId>(States::Waiting),
+        [this](const bitbot::KernelInterface &kernel,
+               Kernel::ExtraData &extra_data,
+               UserData &user_data) { robot_->observer_->Update(); },
+        {Events::InitPose});
+
+    kernel_.RegisterState(
+        "init_pose", static_cast<bitbot::StateId>(States::InitPose),
+        [this](const bitbot::KernelInterface &kernel,
+               Kernel::ExtraData &extra_data, UserData &user_data) {
+          robot_->observer_->Update();
+          init_pos_controller_->Step();
+          robot_->executor_->ExecuteJointTorque();
+        },
+        {Events::PolicyRun});
+
+    kernel_.RegisterState(
+        "policy_run", static_cast<bitbot::StateId>(States::PolicyRun),
+        [this](const bitbot::KernelInterface &kernel,
+               Kernel::ExtraData &extra_data, UserData &user_data) {
+          robot_->observer_->Update();
+          humanoid_controller_->GetCommand() = command_;
+          humanoid_controller_->Step();
+          robot_->executor_->ExecuteJointTorque();
+        },
+        {Events::VeloxDecrease, Events::VeloxIncrease, Events::VeloyDecrease,
+         Events::VeloyIncrease, Events::SetVelX, Events::SetVelY,
+         Events::SetVelW});
+
+    // First state
+    kernel_.SetFirstState(static_cast<bitbot::StateId>(States::Waiting));
+  }
+
+  void BeMaking() { kernel_.Run(); }
+
+  void HaveMade() {
+    logger_->info("Make BITBOT great forever!!!!!!!!!!!!!!!1");
+  }
+
+ private:
+  Kernel kernel_;
+  bitbot::SpdLoggerSharedPtr logger_;
+  ovinf::RobotHhfcMj::Ptr robot_;
+  ovinf::InitPosController::Ptr init_pos_controller_;
+  ovinf::ZeroPosController::Ptr zero_pos_controller_;
+  ovinf::PolicyController::Ptr humanoid_controller_;
+
+  Eigen::Vector3f command_;
+};
+
+#endif  // !USER_FUNC_H
