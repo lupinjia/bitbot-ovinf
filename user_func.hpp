@@ -25,6 +25,8 @@ enum Events {
   VeloxDecrease = 2002,
   VeloyIncrease = 2003,
   VeloyDecrease = 2004,
+  VelowIncrease = 2005,
+  VelowDecrease = 2006,
 
   SetVelX = 2014,
   SetVelY = 2015,
@@ -94,8 +96,7 @@ class MakeBitbotEverywhere {
           if (key_state ==
               static_cast<bitbot::EventValue>(bitbot::KeyboardEvent::Up)) {
             command_[0] += 0.05;
-            std::cout << "current velocity: x=" << command_[0]
-                      << " y=" << command_[2] << std::endl;
+            logger_->info("current velocity: x={}", command_[0]);
           }
           return std::nullopt;
         });
@@ -106,8 +107,7 @@ class MakeBitbotEverywhere {
           if (key_state ==
               static_cast<bitbot::EventValue>(bitbot::KeyboardEvent::Up)) {
             command_[0] -= 0.05;
-            std::cout << "current velocity: x=" << command_[0]
-                      << " y=" << command_[2] << std::endl;
+            logger_->info("current velocity: x={}", command_[0]);
           }
           return std::nullopt;
         });
@@ -118,8 +118,7 @@ class MakeBitbotEverywhere {
           if (key_state ==
               static_cast<bitbot::EventValue>(bitbot::KeyboardEvent::Up)) {
             command_[1] += 0.05;
-            std::cout << "current velocity: x=" << command_[0]
-                      << " y=" << command_[2] << std::endl;
+            logger_->info("current velocity: y={}", command_[1]);
           }
           return std::nullopt;
         });
@@ -130,8 +129,29 @@ class MakeBitbotEverywhere {
           if (key_state ==
               static_cast<bitbot::EventValue>(bitbot::KeyboardEvent::Up)) {
             command_[1] -= 0.05;
-            std::cout << "current velocity: x=" << command_[0]
-                      << " y=" << command_[2] << std::endl;
+            logger_->info("current velocity: y={}", command_[1]);
+          }
+          return std::nullopt;
+        });
+
+    kernel_.RegisterEvent(
+        "velo_w_increase", static_cast<bitbot::EventId>(Events::VelowIncrease),
+        [this](bitbot::EventValue key_state, UserData &) {
+          if (key_state ==
+              static_cast<bitbot::EventValue>(bitbot::KeyboardEvent::Up)) {
+            command_[2] += 0.05;
+            logger_->info("current velocity: w={}", command_[2]);
+          }
+          return std::nullopt;
+        });
+
+    kernel_.RegisterEvent(
+        "velo_w_decrease", static_cast<bitbot::EventId>(Events::VelowDecrease),
+        [this](bitbot::EventValue key_state, UserData &) {
+          if (key_state ==
+              static_cast<bitbot::EventValue>(bitbot::KeyboardEvent::Up)) {
+            command_[2] -= 0.05;
+            logger_->info("current velocity: w={}", command_[2]);
           }
           return std::nullopt;
         });
@@ -157,6 +177,8 @@ class MakeBitbotEverywhere {
         [this](bitbot::EventValue key_state, UserData &) {
           double value = *reinterpret_cast<double *>(&key_state);
           command_[2] = value;
+          logger_->info("current velocity: x={} y={} w={}", command_[0],
+                        command_[1], command_[2]);
           return std::nullopt;
         });
 
@@ -188,8 +210,8 @@ class MakeBitbotEverywhere {
           robot_->executor_->ExecuteJointTorque();
         },
         {Events::VeloxDecrease, Events::VeloxIncrease, Events::VeloyDecrease,
-         Events::VeloyIncrease, Events::SetVelX, Events::SetVelY,
-         Events::SetVelW});
+         Events::VeloyIncrease, Events::VelowIncrease, Events::VelowDecrease,
+         Events::SetVelX, Events::SetVelY, Events::SetVelW});
 
     // First state
     kernel_.SetFirstState(static_cast<bitbot::StateId>(States::Waiting));
@@ -198,7 +220,7 @@ class MakeBitbotEverywhere {
   void BeMaking() { kernel_.Run(); }
 
   void HaveMade() {
-    logger_->info("Make BITBOT great forever!!!!!!!!!!!!!!!1");
+    logger_->info("Make BITBOT great forever!!!!!!!!!!!!!!!!");
   }
 
  private:

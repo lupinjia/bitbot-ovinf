@@ -41,6 +41,14 @@
       "kb_key": "l"
     },
     {
+      "event": "velo_w_increase",
+      "kb_key": "u"
+    },
+    {
+      "event": "velo_w_decrease",
+      "kb_key": "o"
+    },
+    {
       "event": "set_vel_x",
       "kb_key": "!"
     },
