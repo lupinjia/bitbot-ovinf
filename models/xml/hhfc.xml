@@ -29,7 +29,7 @@
   </asset>
 
   <option timestep="0.001" integrator="RK4">
-    <flag sensornoise="enable" frictionloss="enable" />
+    <flag frictionloss="enable" />
   </option>
 
   <visual>

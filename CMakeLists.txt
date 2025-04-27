@@ -11,8 +11,18 @@ set(BITBOT_DEPENDENCY_LOCAL_FILE_PATH ${CMAKE_SOURCE_DIR}/dependencies)
 # set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/home/dknt/Library/openvino_u24_2025.1.0/runtime/cmake")
 set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/home/dknt/Library/openvino-2025.0.0/runtime/cmake")
 
-include(bitbot.cmake)
+include(dependencies/bitbot.cmake)
 include_directories("/usr/include/eigen3")
+
+set(CIFX_HEADER "/home/dknt/Library/cifx/include/")
+include_directories("/home/dknt/Library/cifx/include/")
+link_directories("/home/dknt/Library/cifx/lib/")
+BitbotAddDependency(
+  NAME           bitbot_cifx
+  FILE_NAME      "bitbot_cifx-main.zip"
+  FILE_PATH      ${BITBOT_DEPENDENCY_LOCAL_FILE_PATH}
+  USE_LOCAL_FILE TRUE
+)
 
 BitbotAddDependency(
   NAME           bitbot_mujoco
