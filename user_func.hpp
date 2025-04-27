@@ -12,8 +12,16 @@
 #include "controller/init_pos.hpp"
 #include "controller/policy_controller.hpp"
 #include "controller/zero_pos.hpp"
+
+#ifdef BITBOT_DEPLOY
+#include "robot/hhfc_cifx/hhfc_cifx_common.h"
+#include "robot/hhfc_cifx/robot_hhfc_cifx.hpp"
+using RobotT = ovinf::RobotHhfcCifx;
+#else
 #include "robot/hhfc_mj/hhfc_mj_common.h"
 #include "robot/hhfc_mj/robot_hhfc_mj.hpp"
+using RobotT = ovinf::RobotHhfcMj;
+#endif  // BITBOT_DEOPLOY
 
 enum Events {
   InitPose = 1001,
@@ -48,7 +56,7 @@ class MakeBitbotEverywhere {
         YAML::LoadFile("/home/dknt/Project/bitbot-ovinf/config/robot.yaml");
 
     // robot
-    robot_ = std::make_shared<ovinf::RobotHhfcMj>(config["RobotConfig"]);
+    robot_ = std::make_shared<RobotT>(config["RobotConfig"]);
     // robot_->PrintInfo();
 
     // init controller
@@ -224,7 +232,7 @@ class MakeBitbotEverywhere {
  private:
   Kernel kernel_;
   bitbot::SpdLoggerSharedPtr logger_;
-  ovinf::RobotHhfcMj::Ptr robot_;
+  RobotT::Ptr robot_;
   ovinf::InitPosController::Ptr init_pos_controller_;
   ovinf::ZeroPosController::Ptr zero_pos_controller_;
   ovinf::PolicyController::Ptr humanoid_controller_;

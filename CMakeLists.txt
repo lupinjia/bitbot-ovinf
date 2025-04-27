@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.14)
 
 project(bitbot)
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_BUILD_TYPE Release)
 set(BITBOT_DEPENDENCY_USE_PROXY TRUE)
 set(BITBOT_DEPENDENCY_USE_LOCAL_FILE TRUE)
@@ -11,25 +12,30 @@ set(BITBOT_DEPENDENCY_LOCAL_FILE_PATH ${CMAKE_SOURCE_DIR}/dependencies)
 # set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/home/dknt/Library/openvino_u24_2025.1.0/runtime/cmake")
 set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/home/dknt/Library/openvino-2025.0.0/runtime/cmake")
 
+
 include(dependencies/bitbot.cmake)
 include_directories("/usr/include/eigen3")
 
-set(CIFX_HEADER "/home/dknt/Library/cifx/include/")
-include_directories("/home/dknt/Library/cifx/include/")
-link_directories("/home/dknt/Library/cifx/lib/")
-BitbotAddDependency(
-  NAME           bitbot_cifx
-  FILE_NAME      "bitbot_cifx-main.zip"
-  FILE_PATH      ${BITBOT_DEPENDENCY_LOCAL_FILE_PATH}
-  USE_LOCAL_FILE TRUE
-)
-
-BitbotAddDependency(
-  NAME           bitbot_mujoco
-  FILE_NAME      "bitbot_mujoco-main.zip"
-  FILE_PATH      ${BITBOT_DEPENDENCY_LOCAL_FILE_PATH}
-  USE_LOCAL_FILE TRUE
-)
+set(DEPLOY OFF CACHE BOOL "EtherCAT deployment flat")
+if(DEPLOY)
+  add_definitions(-DBITBOT_DEPLOY)
+  set(CIFX_HEADER "/home/dknt/Library/cifx/include/")
+  include_directories("/home/dknt/Library/cifx/include/")
+  link_directories("/home/dknt/Library/cifx/lib/")
+  BitbotAddDependency(
+    NAME           bitbot_cifx
+    FILE_NAME      "bitbot_cifx-main.zip"
+    FILE_PATH      ${BITBOT_DEPENDENCY_LOCAL_FILE_PATH}
+    USE_LOCAL_FILE TRUE
+  )
+else()
+  BitbotAddDependency(
+    NAME           bitbot_mujoco
+    FILE_NAME      "bitbot_mujoco-main.zip"
+    FILE_PATH      ${BITBOT_DEPENDENCY_LOCAL_FILE_PATH}
+    USE_LOCAL_FILE TRUE
+  )
+endif()
 
 include(FetchContent)
 FetchContent_Declare(
@@ -53,10 +59,17 @@ target_include_directories(main_app PUBLIC ${OVINF_INCLUDED}
   "/usr/include/eigen3/"
   ${CMAKE_SOURCE_DIR}/include
 )
-target_link_libraries(main_app
+if(DEPLOY)
+  target_link_libraries(main_app
+  BitbotCifx
+  ovinf
+  )
+else()
+  target_link_libraries(main_app
   BitbotMujoco
   ovinf
-)
+  )
+endif()
 target_compile_options(main_app PUBLIC)
 target_compile_features(main_app PUBLIC cxx_std_20)
 
