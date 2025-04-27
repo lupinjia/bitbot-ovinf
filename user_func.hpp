@@ -6,9 +6,7 @@
 
 #include <chrono>
 #include <cmath>
-#include <cmath>  // std::abs
 #include <ctime>
-#include <iostream>  // std::cout
 #include <memory>
 
 #include "controller/init_pos.hpp"

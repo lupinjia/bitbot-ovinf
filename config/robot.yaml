@@ -40,7 +40,8 @@ RobotConfig:
     log_data: true
     log_dir: "/home/dknt/Project/bitbot-ovinf/log/extra"
     motor_pos_filter:
-      type: "PassThrough"
+      type: "None"
+      # type: "PassThrough"
       lower_bound: [-3.14, -3.14, -3.14, -3.14, -3.14, -3.14,
                     -3.14, -3.14, -3.14, -3.14, -3.14, -3.14,
                     -3.14, -3.14]
@@ -48,9 +49,10 @@ RobotConfig:
                     3.14, 3.14, 3.14, 3.14, 3.14, 3.14,
                     3.14, 3.14] 
     motor_vel_filter:
-      # type: "Mean"
-      type: "PassThrough"
-      history_length: 10
+      # type: "None"
+      # type: "PassThrough"
+      type: "Mean"
+      history_length: 3
       lower_bound: [-50.0, -50.0, -50.0, -50.0, -50.0, -50.0,
                     -50.0, -50.0, -50.0, -50.0, -50.0, -50.0,
                     -50.0, -50.0]
@@ -58,14 +60,17 @@ RobotConfig:
                     50.0, 50.0, 50.0, 50.0, 50.0, 50.0,
                     50.0, 50.0] 
     ang_vel_filter:
+      # type: "None"
       type: "PassThrough"
       upper_bound: [100.0, 100.0, 100.0]
       lower_bound: [-100.0, -100.0, -100.0]
     acc_filter:
+      # type: "None"
       type: "PassThrough"
       upper_bound: [100.0, 100.0, 100.0]
       lower_bound: [-100.0, -100.0, -100.0]
     euler_filter:
+      # type: "None"
       type: "PassThrough"
       upper_bound: [100.0, 100.0, 100.0]
       lower_bound: [-100.0, -100.0, -100.0]
@@ -179,10 +184,16 @@ RobotConfig:
     decimation: 10
 
     inference:
-      policy_type: "HumanoidStand"
-      stand_threshold: 0.045
-      # policy_type: "Humanoid"
-      model_path: "/home/dknt/Project/bitbot-ovinf/checkpoint/apr23_22_stand.onnx"
+      # policy_type: "HumanoidStand"
+      # stand_threshold: 0.045
+      # model_path: "/home/dknt/Project/bitbot-ovinf/checkpoint/apr23_22_stand.onnx"
+
+      policy_type: "Humanoid"
+      model_path: "/home/dknt/Project/bitbot-ovinf/checkpoint/apr23_08.onnx"
+
+      log_data: true
+      log_dir: "/home/dknt/Project/bitbot-ovinf/log/policy"
+
       device: "CPU"
       cycle_time: 0.70
       single_obs_size: 47
@@ -212,7 +223,7 @@ RobotConfig:
         - "r_knee"
         - "r_ankle_p"
         - "r_ankle_r"
-   
+
       policy_default_position:
         l_hip_p: 0.3
         l_hip_r: 0.0
