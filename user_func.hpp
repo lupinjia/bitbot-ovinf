@@ -192,8 +192,15 @@ class MakeBitbotEverywhere {
     kernel_.RegisterState(
         "waiting", static_cast<bitbot::StateId>(States::Waiting),
         [this](const bitbot::KernelInterface &kernel,
-               Kernel::ExtraData &extra_data,
-               UserData &user_data) { robot_->observer_->Update(); },
+               Kernel::ExtraData &extra_data, UserData &user_data) {
+          static bool first = true;
+          if (first) {
+            first = false;
+            robot_->SetExtraData(extra_data);
+          }
+
+          robot_->observer_->Update();
+        },
         {Events::InitPose});
 
     kernel_.RegisterState(

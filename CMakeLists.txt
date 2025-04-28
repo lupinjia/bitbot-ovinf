@@ -9,9 +9,8 @@ set(BITBOT_DEPENDENCY_USE_PROXY TRUE)
 set(BITBOT_DEPENDENCY_USE_LOCAL_FILE TRUE)
 set(BITBOT_DEPENDENCY_LOCAL_FILE_PATH ${CMAKE_SOURCE_DIR}/dependencies)
 
-# set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/home/dknt/Library/openvino_u24_2025.1.0/runtime/cmake")
-set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/home/dknt/Library/openvino-2025.0.0/runtime/cmake")
-
+set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/home/dknt/Library/openvino_u24_2025.1.0/runtime/cmake")
+# set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/home/dknt/Library/openvino-2025.0.0/runtime/cmake")
 
 include(dependencies/bitbot.cmake)
 include_directories("/usr/include/eigen3")
@@ -59,17 +58,20 @@ target_include_directories(main_app PUBLIC ${OVINF_INCLUDED}
   "/usr/include/eigen3/"
   ${CMAKE_SOURCE_DIR}/include
 )
+
 if(DEPLOY)
   target_link_libraries(main_app
-  BitbotCifx
-  ovinf
+    BitbotCifx
+    BitbotKernel
+    ovinf
   )
 else()
   target_link_libraries(main_app
-  BitbotMujoco
-  ovinf
+    BitbotMujoco
+    ovinf
   )
 endif()
+
 target_compile_options(main_app PUBLIC)
 target_compile_features(main_app PUBLIC cxx_std_20)
 
