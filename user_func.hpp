@@ -18,9 +18,9 @@
 #include "robot/hhfc_cifx/robot_hhfc_cifx.hpp"
 using RobotT = ovinf::RobotHhfcCifx;
 #else
-#include "robot/fc2_mj/robot_fc2_mj.hpp"
-#include "robot/fc2_mj/fc2_mj_common.h"
-using RobotT = ovinf::RobotFc2Mj;
+#include "robot/hhfc_mj/hhfc_mj_common.h"
+#include "robot/hhfc_mj/robot_hhfc_mj.hpp"
+using RobotT = ovinf::RobotHhfcMj;
 #endif  // BITBOT_DEOPLOY
 
 enum Events {
@@ -52,8 +52,7 @@ class MakeBitbotEverywhere {
                        std::string const &controller_config)
       : kernel_(kernel_config) {
     logger_ = bitbot::Logger().ConsoleLogger();
-    YAML::Node config =
-        YAML::LoadFile(controller_config);
+    YAML::Node config = YAML::LoadFile(controller_config);
 
     // robot
     robot_ = std::make_shared<RobotT>(config["RobotConfig"]);

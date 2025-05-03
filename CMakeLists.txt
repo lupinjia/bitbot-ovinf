@@ -4,12 +4,17 @@ project(bitbot)
 
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_BUILD_TYPE Release)
+
 set(BITBOT_DEPENDENCY_USE_PROXY TRUE)
 set(BITBOT_DEPENDENCY_USE_LOCAL_FILE TRUE)
 set(BITBOT_DEPENDENCY_LOCAL_FILE_PATH ${CMAKE_SOURCE_DIR}/dependencies)
 
-set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/home/dknt/Library/openvino_u24_2025.1.0/runtime/cmake")
+
+# set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/home/huahui/Library/openvino_u22_2024.3.0/runtime/cmake")
+set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/home/huahui/Library/openvino_u22_2025.0.0/runtime/cmake")
 # set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/home/dknt/Library/openvino-2025.0.0/runtime/cmake")
 
 include(dependencies/bitbot.cmake)
@@ -39,7 +44,7 @@ endif()
 include(FetchContent)
 FetchContent_Declare(
   ovinf
-  GIT_REPOSITORY git@github.com:Dknt0/ovinf.git
+  GIT_REPOSITORY https://github.com/Dknt0/ovinf.git
   GIT_TAG main
 )
 FetchContent_MakeAvailable(ovinf)
