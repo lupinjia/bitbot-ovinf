@@ -14,9 +14,7 @@ set(BITBOT_DEPENDENCY_USE_LOCAL_FILE TRUE)
 set(BITBOT_DEPENDENCY_LOCAL_FILE_PATH ${CMAKE_SOURCE_DIR}/dependencies)
 
 
-# set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/home/huahui/Library/openvino_u22_2024.3.0/runtime/cmake")
-set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/home/huahui/Library/openvino_u22_2025.0.0/runtime/cmake")
-# set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/home/dknt/Library/openvino-2025.0.0/runtime/cmake")
+set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/home/dknt/Library/openvino-2025.0.0/runtime/cmake")
 
 include(dependencies/bitbot.cmake)
 include_directories("/usr/include/eigen3")

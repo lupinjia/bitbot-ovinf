@@ -38,7 +38,7 @@ RobotConfig:
 
   observer:
     log_data: true
-    log_dir: "/home/huahui/Project/bitbot-ovinf/log/extra"
+    log_dir: "/home/dknt/Project/bitbot-ovinf/log/extra"
     motor_pos_filter:
       # type: "None"
       type: "PassThrough"
@@ -186,13 +186,13 @@ RobotConfig:
     inference:
       # policy_type: "HumanoidStand"
       # stand_threshold: 0.045
-      # model_path: "/home/huahui/Project/bitbot-ovinf/checkpoint/apr23_22_stand.onnx"
+      # model_path: "/home/dknt/Project/bitbot-ovinf/checkpoint/hhfc/apr23_22_stand.onnx"
 
       policy_type: "Humanoid"
-      model_path: "/home/huahui/Project/bitbot-ovinf/checkpoint/hhfc/apr28_11.onnx"
+      model_path: "/home/dknt/Project/bitbot-ovinf/checkpoint/hhfc/apr28_11.onnx"
 
       log_data: true
-      log_dir: "/home/huahui/Project/bitbot-ovinf/log/policy"
+      log_dir: "/home/dknt/Project/bitbot-ovinf/log/policy"
 
       device: "CPU"
       cycle_time: 0.70
