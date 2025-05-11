@@ -17,8 +17,8 @@
           <geom material='obstacle' condim='3' contype='1' conaffinity='15'/>
       </default>
       <default class='leg_joint_param'>
-          <!--<joint damping="0.01" frictionloss="0.01" armature="0.01"/>-->
-          <joint damping="0.0" frictionloss="0.0" armature="0.0"/>
+          <joint damping="0.1" frictionloss="0.1" armature="0.1"/>
+          <!-- <joint damping="0.0" frictionloss="0.0" armature="0.0"/> -->
       </default>
   </default>
 
@@ -80,6 +80,7 @@
         <!-- <inertial pos="-0.0065868 0.038281 -0.019058" quat="0.689291 0.159395 -0.159229 0.688562" mass="0.79889" diaginertia="0.00162063 0.0016035 0.00132837"/> -->
         <inertial pos="-0.0080076 0.037645 -0.018534" quat="0.414257 0.709337 0.188122 0.53837" mass="0.8" diaginertia="0.00249693 0.00187387 0.00185259"/>
         <joint name="Lleg_hip_p_joint" pos="0 0 0" axis="0 -1 0" range="-1.5708 3.1416" class="leg_joint_param"/>
+        <!-- <joint name="Lleg_hip_p_joint" pos="0 0 0" axis="0 -1 0" range="-1.5708 3.1416" stiffness="0" damping="10.0" frictionloss="10.0" armature="0.1"/> -->
         <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.89804 0.91765 0.92941 1" mesh="Lleg_hip_p"/>
 
         <body name="Lleg_hip_r" pos="-0.048264 0.063739 -0.039998" quat="1 -1.49194e-05 -1.55901e-05 6.18077e-06">
@@ -99,6 +100,7 @@
               <!-- <inertial pos="-0.0071953 0.00012337 -0.15866" quat="0.705841 -0.00283084 0.00774909 0.708322" mass="4.1746" diaginertia="0.0171054 0.0159176 0.00207267"/> -->
               <inertial pos="-0.0093168 0.0004254 -0.1569" quat="0.997868 -0.0245164 0.0336298 0.0502756" mass="4.4" diaginertia="0.033405 0.0314582 0.0069106"/>
               <joint name="Lleg_knee_joint" pos="0 0 0" axis="0 -1 0" range="-1.5708 0" class="leg_joint_param"/>
+              <!-- <joint name="Lleg_knee_joint" pos="0 0 0" axis="0 -1 0" range="-1.5708 0" stiffness="0" damping="1.0" frictionloss="20.0" armature="2"/> -->
               <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.89804 0.91765 0.92941 1" mesh="Lleg_knee"/>
               <geom size="0.05 0.125" pos="0 0 -0.175" type="cylinder" rgba="0.89804 0.91765 0.92941 0"/>
 
@@ -125,6 +127,7 @@
         <!-- <inertial pos="-0.0065825 -0.038282 -0.019058" quat="0.688727 -0.159254 0.159385 0.689122" mass="0.79889" diaginertia="0.00162064 0.0016035 0.00132836"/> -->
         <inertial pos="-0.0080033 -0.037645 -0.018534" quat="0.709009 0.414898 0.538551 0.187424" mass="0.8" diaginertia="0.00249686 0.00187362 0.00185253"/>
         <joint name="Rleg_hip_p_joint" pos="0 0 0" axis="0 -1 0" range="-1.5708 3.1416" class="leg_joint_param"/>
+        <!-- <joint name="Rleg_hip_p_joint" pos="0 0 0" axis="0 -1 0" range="-1.5708 3.1416" stiffness="0" damping="10.0" frictionloss="10.0" armature="0.1"/> -->
         <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.89804 0.91765 0.92941 1" mesh="Rleg_hip_p"/>
 
         <body name="Rleg_hip_r" pos="-0.048261 -0.063738 -0.039998" quat="1 -1.49194e-05 -1.55901e-05 6.18077e-06">
@@ -144,6 +147,7 @@
               <!-- <inertial pos="-0.0071953 -0.00012337 -0.15866" quat="0.708482 0.00772113 -0.00291281 0.70568" mass="4.1724" diaginertia="0.0171044 0.0159176 0.00207196"/> -->
               <inertial pos="-0.0080323 -0.0016076 -0.15944" quat="0.503618 0.498429 -0.471667 0.524851" mass="4.4" diaginertia="0.0334195 0.0311732 0.00644732"/>
               <joint name="Rleg_knee_joint" pos="0 0 0" axis="0 -1 0" range="-1.5708 0" class="leg_joint_param"/>
+              <!-- <joint name="Rleg_knee_joint" pos="0 0 0" axis="0 -1 0" range="-1.5708 0" stiffness="0" damping="1.0" frictionloss="20.0" armature="2"/> -->
               <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.89804 0.91765 0.92941 1" mesh="Rleg_knee"/>
               <geom size="0.05 0.125" pos="0 0 -0.175" type="cylinder" rgba="0.89804 0.91765 0.92941 0"/>
 

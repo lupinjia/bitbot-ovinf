@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.14)
 
 project(bitbot)
 
-
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -14,12 +13,12 @@ set(BITBOT_DEPENDENCY_USE_LOCAL_FILE TRUE)
 set(BITBOT_DEPENDENCY_LOCAL_FILE_PATH ${CMAKE_SOURCE_DIR}/dependencies)
 
 
-set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/home/dknt/Library/openvino-2025.0.0/runtime/cmake")
+set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/home/dknt/Library/openvino_u24_2025.1.0/runtime/cmake")
 
 include(dependencies/bitbot.cmake)
 include_directories("/usr/include/eigen3")
 
-set(DEPLOY OFF CACHE BOOL "EtherCAT deployment flat")
+set(DEPLOY OFF CACHE BOOL "EtherCAT deployment flag")
 if(DEPLOY)
   add_definitions(-DBITBOT_DEPLOY)
   set(CIFX_HEADER "/home/dknt/Library/cifx/include/")
@@ -78,4 +77,3 @@ endif()
 
 target_compile_options(main_app PUBLIC)
 target_compile_features(main_app PUBLIC cxx_std_20)
-

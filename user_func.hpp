@@ -198,7 +198,7 @@ class MakeBitbotEverywhere {
             robot_->SetExtraData(extra_data);
           }
 
-          robot_->observer_->Update();
+          robot_->Observer()->Update();
         },
         {Events::InitPose});
 
@@ -206,9 +206,9 @@ class MakeBitbotEverywhere {
         "init_pose", static_cast<bitbot::StateId>(States::InitPose),
         [this](const bitbot::KernelInterface &kernel,
                Kernel::ExtraData &extra_data, UserData &user_data) {
-          robot_->observer_->Update();
+          robot_->Observer()->Update();
           init_pos_controller_->Step();
-          robot_->executor_->ExecuteJointTorque();
+          robot_->Executor()->ExecuteJointTorque();
         },
         {Events::PolicyRun});
 
@@ -216,10 +216,10 @@ class MakeBitbotEverywhere {
         "policy_run", static_cast<bitbot::StateId>(States::PolicyRun),
         [this](const bitbot::KernelInterface &kernel,
                Kernel::ExtraData &extra_data, UserData &user_data) {
-          robot_->observer_->Update();
+          robot_->Observer()->Update();
           humanoid_controller_->GetCommand() = command_;
           humanoid_controller_->Step();
-          robot_->executor_->ExecuteJointTorque();
+          robot_->Executor()->ExecuteJointTorque();
         },
         {Events::VeloxDecrease, Events::VeloxIncrease, Events::VeloyDecrease,
          Events::VeloyIncrease, Events::VelowIncrease, Events::VelowDecrease,
