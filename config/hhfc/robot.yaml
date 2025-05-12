@@ -37,7 +37,7 @@ RobotConfig:
     r_shoulder_p: 1
 
   observer:
-    log_data: true
+    log_data: false # true
     log_dir: "/home/dknt/Project/bitbot-ovinf/log/extra"
     motor_pos_filter:
       # type: "None"
@@ -198,7 +198,7 @@ RobotConfig:
       stand_threshold: 0.045
       model_path: "/home/dknt/Project/bitbot-ovinf/checkpoint/hhfc/dh.onnx"
 
-      log_data: true
+      log_data: false # true
       log_dir: "/home/dknt/Project/bitbot-ovinf/log/policy"
 
       device: "NPU"
