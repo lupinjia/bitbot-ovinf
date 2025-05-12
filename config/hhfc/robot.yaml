@@ -37,7 +37,7 @@ RobotConfig:
     r_shoulder_p: 1
 
   observer:
-    log_data: false # true
+    log_data: true
     log_dir: "/home/dknt/Project/bitbot-ovinf/log/extra"
     motor_pos_filter:
       # type: "None"
@@ -189,22 +189,23 @@ RobotConfig:
       # model_path: "/home/dknt/Project/bitbot-ovinf/checkpoint/hhfc/150p_smooth.onnx"
 
       # Humanoid-gym based walking-standing
-      # policy_type: "HumanoidStand"
-      # stand_threshold: 0.045
-      # model_path: "/home/dknt/Project/bitbot-ovinf/checkpoint/hhfc/apr23_22_stand.onnx"
-
-      # Agi-gym DH based walking-standing
       policy_type: "HumanoidStand"
       stand_threshold: 0.045
-      model_path: "/home/dknt/Project/bitbot-ovinf/checkpoint/hhfc/dh.onnx"
+      model_path: "/home/dknt/Project/bitbot-ovinf/checkpoint/hhfc/apr23_22_stand.onnx"
 
-      log_data: false # true
+      # Agi-gym DH based walking-standing
+      # policy_type: "HumanoidStand"
+      # stand_threshold: 0.045
+      # model_path: "/home/dknt/Project/bitbot-ovinf/checkpoint/hhfc/dh.onnx"
+
+      log_data: true
       log_dir: "/home/dknt/Project/bitbot-ovinf/log/policy"
 
       device: "NPU"
       cycle_time: 0.80
       single_obs_size: 47
-      obs_buffer_size: 66 # 15
+      obs_buffer_size: 15
+      # obs_buffer_size: 66
       action_size: 12
       action_scale: 0.5
       obs_scales:

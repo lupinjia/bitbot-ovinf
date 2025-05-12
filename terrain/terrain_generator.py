@@ -303,10 +303,7 @@ class TerrainGenerator:
         self.scene.write(OUTPUT_SCENE_PATH)
 
 
-if __name__ == "__main__":
-    tg = TerrainGenerator()
-
-    # Discrete Uneven
+def DiscreteUneven(tg: TerrainGenerator):
     tg.AddRoughGround(
         init_pos=[-3.0, -3.0, 0.0],
         euler=[0, 0, 0.0],
@@ -318,5 +315,16 @@ if __name__ == "__main__":
         box_euler_rand=[0.07, 0.07, 0.3],
         separation_rand=[0.05, 0.05],
     )
+
+
+def Slope(tg: TerrainGenerator):
+    tg.AddBox(position=[0.5, 0.0, 0.0], euler=[0.0, -0.1, 0.0], size=[10.0, 5.0, 0.03])
+
+
+if __name__ == "__main__":
+    tg = TerrainGenerator()
+
+    # DiscreteUneven(tg)
+    Slope(tg)
 
     tg.Save()
