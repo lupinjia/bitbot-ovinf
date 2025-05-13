@@ -21,7 +21,7 @@ using RobotT = ovinf::RobotHhfcCifx;
 #include "robot/hhfc_mj/hhfc_mj_common.h"
 #include "robot/hhfc_mj/robot_hhfc_mj.hpp"
 using RobotT = ovinf::RobotHhfcMj;
-#endif  // BITBOT_DEOPLOY
+#endif  // BITBOT_DEPLOY
 
 enum Events {
   InitPose = 1001,
@@ -75,10 +75,8 @@ class MakeBitbotEverywhere {
 
   void WillMake() {
     // Config
-    kernel_.RegisterConfigFunc([this](const KernelBus &bus, UserData &) {
-      robot_->GetDevice(bus);
-      humanoid_controller_->WarmUp();
-    });
+    kernel_.RegisterConfigFunc(
+        [this](const KernelBus &bus, UserData &) { robot_->GetDevice(bus); });
 
     // Event
     kernel_.RegisterEvent(
@@ -208,6 +206,8 @@ class MakeBitbotEverywhere {
                Kernel::ExtraData &extra_data, UserData &user_data) {
           robot_->Observer()->Update();
           init_pos_controller_->Step();
+          // TODO: Add policy switching state to warmup between policy.
+          humanoid_controller_->WarmUp();
           robot_->Executor()->ExecuteJointTorque();
         },
         {Events::PolicyRun});

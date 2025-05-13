@@ -67,7 +67,7 @@
     <!-- Floor -->
     <geom name="floor" type="plane" size="0 0 0.05" material="grid"/>
 
-    <body name="base_thorax" pos="0 0 0.92" euler="0 0 0">
+    <body name="base_thorax" pos="0 0 0.94" euler="0 0 0">
       <!-- <inertial pos="0.0071545 -0.00014864 0.10711"  mass="21.7513" fullinertia="0.096973 0.056865 0.10587 -2.6251E-05 0.00041701 2.8904E-05"/> -->
       <inertial pos="0.0063842 0.00017156 0.099276"  mass="21.7513" fullinertia="0.51774 0.41969 0.193013 3.96E-05 0.000772 0.000516"/>
       <freejoint name="base_thorax"/>

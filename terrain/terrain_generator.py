@@ -305,7 +305,7 @@ class TerrainGenerator:
 
 def DiscreteUneven(tg: TerrainGenerator):
     tg.AddRoughGround(
-        init_pos=[-3.0, -3.0, 0.0],
+        init_pos=[-3.0, -3.0, 0.005],
         euler=[0, 0, 0.0],
         nums=[20, 20],
         box_size=[0.5, 0.5, 0.05],
@@ -325,6 +325,6 @@ if __name__ == "__main__":
     tg = TerrainGenerator()
 
     # DiscreteUneven(tg)
-    Slope(tg)
+    # Slope(tg)
 
     tg.Save()
