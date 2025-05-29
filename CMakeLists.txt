@@ -13,7 +13,7 @@ set(BITBOT_DEPENDENCY_USE_LOCAL_FILE TRUE)
 set(BITBOT_DEPENDENCY_LOCAL_FILE_PATH ${CMAKE_SOURCE_DIR}/dependencies)
 
 
-set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/home/dknt/Library/openvino_u24_2025.1.0/runtime/cmake")
+set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/opt/intel/openvino_2025/runtime/cmake") # modify openvino installation path as needed
 
 include(dependencies/bitbot.cmake)
 include_directories("/usr/include/eigen3")

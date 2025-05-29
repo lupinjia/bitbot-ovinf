@@ -12,7 +12,7 @@ import noise
 from numpy.core.fromnumeric import size
 from numpy.random import rand
 
-ROOT_PATH = "/home/dknt/Project/bitbot-ovinf/models/hhfc/"
+ROOT_PATH = "/home/jason/bitbot-ovinf/models/hhfc/"
 INPUT_SCENE_PATH = ROOT_PATH + "xml/hhfc.xml"
 OUTPUT_SCENE_PATH = ROOT_PATH + "xml/hhfc_terrain.xml"
 HF_IMAGE_PATH = ROOT_PATH + "hf_image/"

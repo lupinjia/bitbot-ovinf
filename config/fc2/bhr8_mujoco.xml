@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <bitbot>
-  <logger path="/home/dknt/Project/bitbot-ovinf/log/" level="info"/>
+  <logger path="/home/jason/bitbot-ovinf/log/" level="info"/>
 
   <backend port="12888" settings_file="./backend.json"/>
 
