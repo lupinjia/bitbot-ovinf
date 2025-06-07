@@ -12,8 +12,8 @@ set(BITBOT_DEPENDENCY_USE_PROXY TRUE)
 set(BITBOT_DEPENDENCY_USE_LOCAL_FILE TRUE)
 set(BITBOT_DEPENDENCY_LOCAL_FILE_PATH ${CMAKE_SOURCE_DIR}/dependencies)
 
-
-set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/opt/intel/openvino_2025/runtime/cmake") # modify openvino installation path as needed
+# modify openvino installation path as needed
+set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/opt/intel/openvino_2025/runtime/cmake") 
 
 include(dependencies/bitbot.cmake)
 include_directories("/usr/include/eigen3")
@@ -42,7 +42,7 @@ endif()
 include(FetchContent)
 FetchContent_Declare(
   ovinf
-  GIT_REPOSITORY https://github.com/Dknt0/ovinf.git
+  GIT_REPOSITORY git@github.com:lupinjia/ovinf.git
   GIT_TAG main
 )
 FetchContent_MakeAvailable(ovinf)

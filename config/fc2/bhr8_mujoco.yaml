@@ -50,7 +50,7 @@ RobotConfig:
 
   observer:
     log_data: true
-    log_dir: "/home/jason/bitbot-ovinf/log/extra"
+    log_dir: "/home/lupinjia/bitbot-ovinf/log/extra"
     motor_pos_filter:
       # type: "None"
       type: "PassThrough"
@@ -238,10 +238,10 @@ RobotConfig:
 
     inference:
       policy_type: "Humanoid"
-      model_path: "/home/jason/bitbot-ovinf/checkpoint/fc2/5k.onnx"
+      model_path: "/home/lupinjia/bitbot-ovinf/checkpoint/fc2/5k.onnx"
 
       log_data: true
-      log_dir: "/home/jason/bitbot-ovinf/log/policy"
+      log_dir: "/home/lupinjia/bitbot-ovinf/log/policy"
 
       device: "CPU"
       cycle_time: 0.70
