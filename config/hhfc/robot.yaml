@@ -203,7 +203,7 @@ RobotConfig:
 
       # lupinjia humanoid walk
       policy_type: "HumanoidWalk"
-      model_path: "/home/lupinjia/bitbot-ovinf/checkpoint/hhfc/Jun05_09-25-04_sw.onnx"
+      model_path: "/home/lupinjia/bitbot-ovinf/checkpoint/hhfc/Jul08_16-17-36_4600.onnx"
       obs_buffer_size: 10
 
       log_data: true
@@ -222,11 +222,11 @@ RobotConfig:
         proj_gravity: 1.0
       clip_action: 100.0
       realtime: true # false
-      gait_period: 0.8
-      theta_left: 0.0
+      gait_period: 0.35
+      theta_left: 0.5
       theta_right: 0.0
-      swing_phase_ratio: 0.0
-      stance_phase_ratio: 1.0
+      swing_phase_ratio: 0.6
+      stance_phase_ratio: 0.4
       control_dt: 0.01        # 100Hz
 
       policy_joint_names:

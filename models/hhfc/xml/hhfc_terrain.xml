@@ -54,6 +54,8 @@
     <mesh name="Rleg_ankle_r" file="Rleg_ankle_r.STL" />
     <mesh name="Larm_shoulder_p" file="Larm_shoulder_p.STL" />
     <mesh name="Rarm_shoulder_p" file="Rarm_shoulder_p.STL" />
+    <mesh name="whole_foot_visual" file="whole_foot_visual.stl" />
+    <mesh name="whole_foot" file="whole_foot.stl"/>
   </asset>
 
   <worldbody>
@@ -114,8 +116,8 @@
                   
                   <inertial pos="0.021653 2.4998e-08 -0.044273" quat="1.13655e-06 0.717415 -1.10364e-06 0.696646" mass="0.88" diaginertia="0.00668964 0.005724 0.00130736" />
                   <joint name="Lleg_ankle_r_joint" pos="0 0 0" axis="1 0 0" range="-0.34453292519943295 0.34453292519943295" class="leg_joint_param" />
-                  <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.89804 0.91765 0.92941 1" mesh="Lleg_ankle_r" />
-                  <geom name="Lleg_ankle_r" type="mesh" rgba="0.89804 0.91765 0.92941 0" mesh="Lleg_ankle_r" />
+                  <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.89804 0.91765 0.92941 1" mesh="whole_foot_visual" />
+                  <geom name="Lleg_ankle_r" type="mesh" rgba="0.89804 0.91765 0.92941 0" mesh="whole_foot" />
                 </body>
               </body>
             </body>
@@ -161,8 +163,8 @@
                   
                   <inertial pos="0.021653 2.5592e-08 -0.044273" quat="0 0.717415 0 0.696646" mass="0.88" diaginertia="0.00668964 0.005725 0.00130736" />
                   <joint name="Rleg_ankle_r_joint" pos="0 0 0" axis="1 0 0" range="-0.34453292519943295 0.34453292519943295" class="leg_joint_param" />
-                  <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.89804 0.91765 0.92941 1" mesh="Rleg_ankle_r" />
-                  <geom name="Rleg_ankle_r" type="mesh" rgba="0.89804 0.91765 0.92941 0" mesh="Rleg_ankle_r" />
+                  <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.89804 0.91765 0.92941 1" mesh="whole_foot_visual" />
+                  <geom name="Rleg_ankle_r" type="mesh" rgba="0.89804 0.91765 0.92941 0" mesh="whole_foot" />
                 </body>
               </body>
             </body>
