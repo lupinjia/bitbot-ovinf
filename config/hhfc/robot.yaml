@@ -203,7 +203,7 @@ RobotConfig:
 
       # lupinjia humanoid walk
       policy_type: "HumanoidWalk"
-      model_path: "/home/lupinjia/bitbot-ovinf/checkpoint/hhfc/Jul16_11-36-37_27.onnx"
+      model_path: "/home/lupinjia/bitbot-ovinf/checkpoint/hhfc/Jul21_08-53-40_27.onnx"
       obs_buffer_size: 10
 
       log_data: true
