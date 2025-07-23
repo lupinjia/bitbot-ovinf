@@ -202,15 +202,20 @@ RobotConfig:
       # obs_buffer_size: 66
 
       # lupinjia humanoid walk
-      policy_type: "HumanoidWalk"
-      model_path: "/home/lupinjia/bitbot-ovinf/checkpoint/hhfc/Jul21_08-53-40_27.onnx"
-      obs_buffer_size: 10
+      # policy_type: "HumanoidWalk"
+      # model_path: "/home/lupinjia/bitbot-ovinf/checkpoint/hhfc/Jul21_08-53-40_27.onnx"
+      # obs_buffer_size: 10
+
+      # lupinjia humanoid walk clock
+      policy_type: "HumanoidWalkClock"
+      model_path: "/home/lupinjia/bitbot-ovinf/checkpoint/hhfc/Jul22_23-07-25_19.onnx"
+      obs_buffer_size: 15
 
       log_data: true
       log_dir: "/home/lupinjia/bitbot-ovinf/log/policy"
 
       device: "CPU"
-      single_obs_size: 45
+      single_obs_size: 49
       action_size: 12
       action_scale: 0.25
       obs_scales:
@@ -222,6 +227,12 @@ RobotConfig:
         proj_gravity: 1.0
       clip_action: 100.0
       realtime: true # false
+      gait_period: 0.7
+      theta_left: 0.5
+      theta_right: 0.0
+      swing_phase_ratio: 0.5
+      stance_phase_ratio: 0.5
+      control_dt: 0.01        # 100Hz
 
       policy_joint_names:
         - "l_hip_p"
